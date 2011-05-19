@@ -13,7 +13,7 @@
  * <http://mrphp.com.au/code/image-cache-using-phpthumb-and-modrewrite>
  *
  * @author Robin North
- * @version 1.0.0
+ * @version 1.0.1
  *
  * @id Imprint flush cache utility
  *
@@ -29,31 +29,37 @@
  *
  * - Initial release
  * --------------------------------------------------------------------------
+ *
+ * 18-05-2011	-	1.0.1
+ *
+ * - Updated demo to utilise new support for deleting specific image sizes
+ * --------------------------------------------------------------------------
  */
 	
 	/* =Required libraries
 	------------------------------------------------------------------- */
-		include( 'imprint.config.inc.php' );
-		include( 'lib/debug.inc.php' );
+		include( '../application/imprint/imprint.config.inc.php' );
+		include( '../application/imprint/lib/debug.inc.php' );
 		
-		require( 'lib/imprint.class.php' );
+		require( '../application/imprint/lib/imprint.class.php' );
 
 	/* =Application functionality
 	------------------------------------------------------------------- */
 		
-		// Check for an image to flush
-		if ( isset( $_GET['image'] ) ) {
-			// Assign variable
-			$image_url = $_GET['image'];
-		} else {
-			// Entire cache will be flushed
-			$image_url = null;
-		};
+		// Check for a specific source image to flush
+		$image_url = ( isset( $_GET['image'] ) ) ? $_GET['image'] : null;
+
+		// Check for a specific image size to flush
+		$image_size = ( isset( $_GET['size'] ) ) ? array( $_GET['size'] ) : null;
 		
 		// Create new instance of Imprint Class
 		$imprint = new Imprint( $config );
 
 		// Test flushing the cache
-		$imprint->flush_cache( $image_url );
+		if ( $imprint->flush_cache( $image_url, $image_size ) ) {
+			echo 'Cache flushed!';
+		} else {
+			echo 'Cache not flushed!';
+		}
 
 ?>

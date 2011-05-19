@@ -13,7 +13,7 @@
  * <http://mrphp.com.au/code/image-cache-using-phpthumb-and-modrewrite>
  *
  * @author Robin North
- * @version 1.0.0
+ * @version 1.1.0
  *
  * @id Imprint Class
  *
@@ -28,6 +28,12 @@
  * 18-03-2011	-	1.0.0
  *
  * - Initial release
+ * --------------------------------------------------------------------------
+ *
+ * 18-05-2011	-	1.1.0
+ *
+ * - Added ability to delete specific size(s) of cached images
+ * - Fixed issue that prevented all sizes of specific cached image from being deleted
  * --------------------------------------------------------------------------
  */
 
@@ -358,12 +364,13 @@ class Imprint {
 	 *
 	 * Deletes files from image cache
 	 *
-	 * @param	{String}	$source_image_path	Path of source image to remove from cache. If null, ENTIRE cache is flushed instead
+	 * @param	{String}	$source_image_path	Path of source image to remove from cache. If null, ALL source images flushed
+	 * @param	{Array}		$source_image_sizes	Array of image sizes to remove from cache. If null, ALL image sizes flushed
 	 *
 	 * @returns {Boolean}						'true' if successful, 'false' if not		
 	 */
-	public function flush_cache( $source_image_path=null ) {
-
+	public function flush_cache( $source_image_path=null, $source_image_sizes=null ) {
+		
 		/**
 		 * Get top-level cache directories, representing image sizes
 		 */
@@ -376,8 +383,10 @@ class Imprint {
 
 		// Open cache directory
 		if ( !$handle = opendir( $cache_path ) ) {
-			// Exit with error message
-			exit( 'Could not open directory at: '. $cache_path );
+			// Show error message
+			trigger_error( 'Could not open directory at: '. $cache_path, E_USER_ERROR );
+			// Return
+			return false;
 		}
 		
 		// Read directories in cache
@@ -398,7 +407,7 @@ class Imprint {
 		 * Flush cache for specific image, if given, or for every image
 		 */
 		 
-		if ( $source_image_path ) {
+		if ( isset( $source_image_path ) ) {
 			
 			/**
 			 * Flush specific image
@@ -407,21 +416,28 @@ class Imprint {
 			// Loop through image size cache directories and search for the source image
 			foreach ( $size_directories as $size_directory ) {
 			
+				// Check if we're only flushing specific image sizes or not
+				if ( isset( $source_image_sizes ) ) {
+					// Skip current size cache directory if it's not in the sizes to delete array
+					if ( !in_array( $size_directory, $source_image_sizes, true ) ) {
+						continue;
+					}
+				}
+				
 				// Build image path to look for
 				$image_path = $cache_path . $size_directory . '/' . $source_image_path;
 				
 				if ( file_exists( $image_path ) ) {
 					// Delete image
 					if( !unlink( $image_path ) ) {
-						// Exit with error message
-						echo 'Could not unlink file at: ' . $image_path;
-						
-						return false;
+						// Show error message
+						trigger_error( 'Could not unlink file at: ' . $image_path, E_USER_WARNING );
 					}
 					
 					// Delete containing dir(s), if empty
 					if( !$this->delete_cache_directory_tree( dirname( $image_path ), 'up', false ) ) {
-						return false;
+						// Show error message
+						trigger_error( 'Could not delete cache directory tree at: ' . dirname( $image_path ), E_USER_NOTICE );
 					}
 
 				}
@@ -436,12 +452,21 @@ class Imprint {
 			// Loop through image size cache directories and remove each of them, and their contents
 			foreach ( $size_directories as $size_directory ) {
 			
+				// Check if we're only flushing specific image sizes or not
+				if ( isset( $source_image_sizes ) ) {
+					// Skip current size cache directory if it's not in the sizes to delete array
+					if ( !in_array( $size_directory, $source_image_sizes, true ) ) {
+						continue;
+					}
+				}
+				
 				// Build full directory path
 				$size_directory_path = $cache_path . $size_directory;
 				
 				// Delete containing dir(s), if empty
 				if( !$this->delete_cache_directory_tree( $size_directory_path, 'down', true ) ) {
-					return false;
+					// Show error message
+					trigger_error( 'Could not delete cache directory tree at: ' . $size_directory_path, E_USER_NOTICE );
 				}
 			
 			}
@@ -473,7 +498,9 @@ class Imprint {
 		// Check directory exists
 		if ( !is_dir( $directory_path ) || is_link( $directory_path ) ) {
 			// Directory doesn't exist or is a symlink, so exit with an error
-			exit( 'Directory doesn\'t exist or is a symlink' );
+			trigger_error( 'Directory doesn\'t exist or is a symlink at: ' . $directory_path, E_USER_ERROR );
+			// Return
+			return false;
 		}
 		
 		// Unwanted files that are safe to delete
@@ -484,8 +511,10 @@ class Imprint {
 		
 		// Examine directory contents
 		if ( !$handle = opendir( $directory_path ) ) {
-			// Exit with error message
-			exit( 'Could not open directory at: '. $directory_path );
+			// Show error message
+			trigger_error( 'Could not open directory at: '. $directory_path, E_USER_ERROR );
+			// Return
+			return false;
 		}
 		
 		// Read contents
@@ -505,13 +534,17 @@ class Imprint {
 					} else {
 						// Delete file
 						if ( !unlink( $file_path ) ) {
-							// Exit
+							// Show error message
+							trigger_error( 'Could not unlink file at: ' . $file_path, E_USER_ERROR );
+							// Return
 							return false;
 						}
 					}
 
 				} else {
 					// Exit if we don't want to delete directory contents or we don't have permission to do so
+					trigger_error( 'Directory is not empty or not readable at: ' . $directory_path, E_USER_NOTICE );
+					// Return
 					return false;
 				}
 				
@@ -523,7 +556,9 @@ class Imprint {
 		
 		// Attempt to delete current directory
 		if ( !rmdir( $directory_path ) ) {
-			// Exit
+			// Show error message
+			trigger_error( 'Could not delete directory at: ' . $directory_path, E_USER_ERROR );
+			// Return
 			return false;
 		}
 		

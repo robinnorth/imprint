@@ -13,7 +13,7 @@
  * <http://mrphp.com.au/code/image-cache-using-phpthumb-and-modrewrite>
  *
  * @author Robin North
- * @version 1.0.0
+ * @version 1.1.0
  *
  * @id Imprint configuration
  *
@@ -26,11 +26,9 @@
 		// Imprint web application configuration
 		$config = Array(
 			'imprint'	=>	Array(
-				'site_root_path'			=>	$_SERVER['DOCUMENT_ROOT'] . '/sandbox/imprint-sandbox/',
+				'site_root_path'			=>	$_SERVER['DOCUMENT_ROOT'] . '/',
 				'allowed_dimensions'		=>	Array(
-					'100x100',
 					'200x200',
-					'290x290',
 					'600x600'
 				)
 			),

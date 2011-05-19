@@ -13,7 +13,7 @@
  * <http://mrphp.com.au/code/image-cache-using-phpthumb-and-modrewrite>
  *
  * @author Robin North
- * @version 1.0.0
+ * @version 1.0.1
  *
  * @id Imprint MODx Evo Plugin
  *
@@ -32,6 +32,10 @@
  * 18-03-2011	-	1.0.0
  *
  * - Initial release
+ * 
+ * 09-05-2011	-	1.0.1
+ *
+ * - Fix for saving documents with no template variables
  * --------------------------------------------------------------------------
  */
 	
@@ -99,14 +103,19 @@
 				while ( $row = $modx->db->getRow( $query ) ) {
 					$variables[ $row['name'] ] =  $row['id'];
 				}
-
-				// Find image template variables for current document
-				$query = $modx->db->query( 'SELECT value FROM ' . $tvars_content_table . ' WHERE contentid = \''. $id . '\' AND tmplvarid IN (' . implode( ', ', $variables ) . ')' );
 				
-				// Clear cache
-				while ( $row = $modx->db->getRow( $query ) ) {	
-					// Flush the cache
-					$imprint->flush_cache( $row['value'] );
+				// If image variables are found, flush the Imprint cache for them
+				if ( !empty( $variables ) ) {
+
+					// Find image template variables for current document
+					$query = $modx->db->query( 'SELECT value FROM ' . $tvars_content_table . ' WHERE contentid = \''. $id . '\' AND tmplvarid IN (' . implode( ', ', $variables ) . ')' );
+					
+					// Clear cache
+					while ( $row = $modx->db->getRow( $query ) ) {	
+						// Flush the cache
+						$imprint->flush_cache( $row['value'] );
+					}
+					
 				}
 	
 			break;

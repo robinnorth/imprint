@@ -13,22 +13,11 @@
  * <http://mrphp.com.au/code/image-cache-using-phpthumb-and-modrewrite>
  *
  * @author Robin North
- * @version 1.0.0
+ * @version 1.1.0
  *
  * @id Imprint debug configuration
  *
  * @desc The Imprint web application debug configuration file
- *
- * Changes:
- *
- * (dd-mm-yyyy)
- *
- * --------------------------------------------------------------------------
- *
- * 18-03-2011	-	1.0.0
- *
- * - Initial release
- * --------------------------------------------------------------------------
  */
 	
 	/* =Debug configuration
