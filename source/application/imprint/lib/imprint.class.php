@@ -13,7 +13,7 @@
  * <http://mrphp.com.au/code/image-cache-using-phpthumb-and-modrewrite>
  *
  * @author Robin North
- * @version 1.1.0
+ * @version 1.1.1
  *
  * @id Imprint Class
  *
@@ -34,6 +34,11 @@
  *
  * - Added ability to delete specific size(s) of cached images
  * - Fixed issue that prevented all sizes of specific cached image from being deleted
+ * --------------------------------------------------------------------------
+ *
+ * 27-06-2011	-	1.1.1
+ *
+ * - Prevent fatal error when using multiple Imprint instances by only requiring phpThumb once
  * --------------------------------------------------------------------------
  */
 
@@ -93,7 +98,7 @@ class Imprint {
 		 */
 		
 		// Include phpThumb class
-		require( $this->config['imprint']['site_root_path'] . $this->config['imprint']['imprint_path'] . 'lib/phpthumb/phpthumb.class.php' );
+		require_once( $this->config['imprint']['site_root_path'] . $this->config['imprint']['imprint_path'] . 'lib/phpthumb/phpthumb.class.php' );
 		
 		// Create new phpThumb instance
 		$this->phpthumb = new phpThumb();

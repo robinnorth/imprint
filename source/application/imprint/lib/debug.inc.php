@@ -13,7 +13,7 @@
  * <http://mrphp.com.au/code/image-cache-using-phpthumb-and-modrewrite>
  *
  * @author Robin North
- * @version 1.1.0
+ * @version 1.1.1
  *
  * @id Imprint debug configuration
  *
