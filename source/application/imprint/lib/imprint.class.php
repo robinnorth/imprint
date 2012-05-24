@@ -55,18 +55,18 @@ class Imprint {
 	/**
 	 * Class properties
 	 */
-	private $_config = Array(
-		'imprint' => Array(
+	private $_config = array(
+		'imprint' => array(
 			'site_root_path' => null,
 			'imprint_path' => 'imprint/',
-			'allowed_dimensions' => Array(
+			'allowed_dimensions' => array(
 				'50x50',
 				'100x100',
 				'200x200',
 				'500x500'
 			)
 		),
-		'phpthumb' => Array(
+		'phpthumb' => array(
 			'zoom_crop' => 'C',
 			'force_aspect_ratio' => 'C',
 			'ignore_aspect_ratio' => 0,
@@ -78,7 +78,7 @@ class Imprint {
 			'imagemagick_use_thumbnail' => true,
 			'imagemagick_path' => '/usr/bin/convert',
 			'max_source_pixels' => -1,
-			'nohotlink_valid_domains' => Array( )
+			'nohotlink_valid_domains' => array( )
 		)
 	);
 	private $_phpthumb;
@@ -190,7 +190,7 @@ class Imprint {
 		$cache_path = $this->_config[ 'imprint' ][ 'site_root_path' ] . $this->_config[ 'imprint' ][ 'imprint_path' ] . 'cache/';
 
 		// Init directories array
-		$size_directories = Array( );
+		$size_directories = array();
 
 		// Open cache directory
 		if ( !$handle = opendir( $cache_path ) ) {
@@ -325,7 +325,7 @@ class Imprint {
 		$background = ( isset( $_GET[ 'bg' ] ) ) ? $this->_clean( $_GET[ 'bg' ] ) : $this->_config[ 'phpthumb' ][ 'background' ];
 
 		// Build attributes array
-		$attributes = Array(
+		$attributes = array(
 			'source_path' => $source_path,
 			'output_path' => $output_path,
 			'output_url' => $output_url,
@@ -428,7 +428,7 @@ class Imprint {
 	 */
 	private function _extend_config( $defaults, $user ) {
 		$user = (array) $user;
-		$config = Array();
+		$config = array();
 
 		// Extend default configuration array recursively
 		foreach ( $defaults as $name => $default ) {
@@ -493,7 +493,7 @@ class Imprint {
 		}
 
 		// Unwanted files that are safe to delete
-		$unwanted_files = Array(
+		$unwanted_files = array(
 			'Thumbs.db',
 			'.DS_Store'
 		);

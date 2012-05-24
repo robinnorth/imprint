@@ -24,17 +24,17 @@
   ------------------------------------------------------------------- */
 
 // Imprint web application configuration
-$config = Array(
-	'imprint' => Array(
+$config = array(
+	'imprint' => array(
 		'site_root_path' => $_SERVER[ 'DOCUMENT_ROOT' ] . '/',
-		'allowed_dimensions' => Array(
+		'allowed_dimensions' => array(
 			'200x200',
 			'600x600'
 		)
 	),
-	'phpthumb' => Array(
+	'phpthumb' => array(
 		'temp_directory' => '/tmp/persistent/phpthumb/cache/',
-		'nohotlink_valid_domains' => Array( @$_SERVER[ 'HTTP_HOST' ], 'stage.phenotype.net' )
+		'nohotlink_valid_domains' => array( @$_SERVER[ 'HTTP_HOST' ], 'stage.phenotype.net' )
 	)
 );
 

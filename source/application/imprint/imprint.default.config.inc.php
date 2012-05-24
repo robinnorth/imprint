@@ -24,18 +24,18 @@
   ------------------------------------------------------------------- */
 
 // Imprint web application configuration
-$config = Array(
-	'imprint' => Array(
+$config = array(
+	'imprint' => array(
 		'site_root_path' => $_SERVER[ 'DOCUMENT_ROOT' ] . '/',
 		'imprint_path' => 'imprint/',
-		'allowed_dimensions' => Array(
+		'allowed_dimensions' => array(
 			'50x50',
 			'100x100',
 			'200x200',
 			'500x500'
 		)
 	),
-	'phpthumb' => Array(
+	'phpthumb' => array(
 		'zoom_crop' => 'C',
 		'force_aspect_ratio' => 'C',
 		'ignore_aspect_ratio' => 0,
@@ -47,7 +47,7 @@ $config = Array(
 		'imagemagick_use_thumbnail' => true,
 		'imagemagick_path' => '/usr/bin/convert',
 		'max_source_pixels' => -1,
-		'nohotlink_valid_domains' => Array(
+		'nohotlink_valid_domains' => array(
 			@$_SERVER[ 'HTTP_HOST' ]
 		)
 	)
