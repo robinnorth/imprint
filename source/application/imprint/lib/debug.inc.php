@@ -2,11 +2,11 @@
 /*!
  * Imprint
  *
- * @copyright (c) 2011 Robin North - robin(at)phenotype(dot)net
- * <http://www.phenotype.net>
+ * @copyright (c) 2012 Robin North - robin(at)robinnorth(dot)co(dot)uk
+ * <http://www.robinnorth.co.uk>
  *
  * Licensed under the GNU GPLv2 (see license.txt)
- * Date: 18/03/2011
+ * Date: 24/05/2012
  *
  * @projectDescription A complete image cropping, resizing and caching implementation for
  * high-traffic *AMP web applications, based on an idea by Brett at Mr PHP
