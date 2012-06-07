@@ -86,7 +86,7 @@ class phpthumb_filters {
 
 
 	function Blur(&$gdimg, $radius=0.5) {
-		// Taken from Torstein Hï¿½nsi's phpUnsharpMask (see phpthumb.unsharp.php)
+		// Taken from Torstein Hønsi's phpUnsharpMask (see phpthumb.unsharp.php)
 
 		$radius = round(max(0, min($radius, 50)) * 2);
 		if (!$radius) {
@@ -296,15 +296,24 @@ class phpthumb_filters {
 	}
 
 
-	function DropShadow(&$gdimg, $distance, $width, $hexcolor, $angle, $fade) {
+	function DropShadow(&$gdimg, $distance, $width, $hexcolor, $angle, $alpha) {
 		if (phpthumb_functions::gd_version() < 2) {
 			return false;
 		}
-		$distance = ($distance ? $distance : 10);
-		$width    = ($width    ? $width    : 10);
-		$hexcolor = ($hexcolor ? $hexcolor : '000000');
-		$angle    = ($angle    ? $angle    : 225);
-		$fade     = ($fade     ? $fade     : 1);
+		$distance =                 ($distance ? $distance : 10);
+		$width    =                 ($width    ? $width    : 10);
+		$hexcolor =                 ($hexcolor ? $hexcolor : '000000');
+		$angle    =                 ($angle    ? $angle    : 225) % 360;
+		$alpha    = max(0, min(100, ($alpha    ? $alpha    : 100)));
+
+		if ($alpha <= 0) {
+			// invisible shadow, nothing to do
+			return true;
+		}
+		if ($distance <= 0) {
+			// shadow completely obscured by source image, nothing to do
+			return true;
+		}
 
 		$width_shadow  = cos(deg2rad($angle)) * ($distance + $width);
 		$height_shadow = sin(deg2rad($angle)) * ($distance + $width);
@@ -312,7 +321,7 @@ class phpthumb_filters {
 		$scaling = min(ImageSX($gdimg) / (ImageSX($gdimg) + abs($width_shadow)), ImageSY($gdimg) / (ImageSY($gdimg) + abs($height_shadow)));
 
 		for ($i = 0; $i < $width; $i++) {
-			$WidthAlpha[$i] = (abs(($width / 2) - $i) / $width) * $fade;
+			$WidthAlpha[$i] = (abs(($width / 2) - $i) / $width);
 			$Offset['x'] = cos(deg2rad($angle)) * ($distance + $i);
 			$Offset['y'] = sin(deg2rad($angle)) * ($distance + $i);
 		}
@@ -629,7 +638,7 @@ class phpthumb_filters {
 
 				$DefaultColors = array('r'=>'FF0000', 'g'=>'00FF00', 'b'=>'0000FF', 'a'=>'999999', '*'=>'FFFFFF');
 				$Colors = explode(';', $colors);
-				$BandsToGraph = array_unique(preg_split('//', $bands));
+				$BandsToGraph = array_unique(preg_split('##', $bands));
 				$keys = array('r'=>'red', 'g'=>'green', 'b'=>'blue', 'a'=>'alpha', '*'=>'gray');
 				foreach ($BandsToGraph as $key => $band) {
 					if (!isset($keys[$band])) {
@@ -1413,7 +1422,7 @@ class phpthumb_filters {
 			$margin_y = (is_null($margin_y) ? $margin_x : $margin_y);
 			$watermark_margin_x = ((($margin_x > 0) && ($margin_x < 1)) ? round((1 - $margin_x) * $img_source_width)  : $margin_x);
 			$watermark_margin_y = ((($margin_y > 0) && ($margin_y < 1)) ? round((1 - $margin_y) * $img_source_height) : $margin_y);
-			if (preg_match('#^([0-9\\.\\-]*)x([0-9\\.\\-]*)$#', $alignment, $matches)) {
+			if (preg_match('#^([0-9\\.\\-]*)x([0-9\\.\\-]*)$#i', $alignment, $matches)) {
 				$watermark_destination_x = intval($matches[1]);
 				$watermark_destination_y = intval($matches[2]);
 			} else {
