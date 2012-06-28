@@ -12,7 +12,7 @@
  * <http://mrphp.com.au/code/image-cache-using-phpthumb-and-modrewrite>
  *
  * @author Robin North
- * @version 1.0.0
+ * @version 1.1.1
  *
  * @id Imprint readme
  *
@@ -27,6 +27,17 @@
  * 18-03-2011	-	1.0.0
  *
  * - Initial release
+ * --------------------------------------------------------------------------
+ *
+ * 18-05-2011	-	1.1.0
+ *
+ * - Added ability to delete specific size(s) of cached images
+ * - Fixed issue that prevented all sizes of specific cached image from being deleted
+ * --------------------------------------------------------------------------
+ *
+ * 27-06-2011	-	1.1.1
+ *
+ * - Prevent fatal error when using multiple Imprint instances by only requiring phpThumb once
  * --------------------------------------------------------------------------
  */
  
