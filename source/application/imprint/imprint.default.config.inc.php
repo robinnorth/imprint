@@ -1,9 +1,10 @@
 <?php
-/* !
+/**
  * Imprint
  *
- * @copyright (c) 2012 Robin North - robin(at)robinnorth(dot)co(dot)uk
+ * @copyright (c) 2012 Robin North <robin@robinorth.co.uk>
  * <http://www.robinnorth.co.uk>
+ * 
  *
  * Licensed under the GNU GPLv2 (see license.txt)
  * Date: 24/05/2012
