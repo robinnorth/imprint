@@ -1,9 +1,8 @@
 <?php
-
-/* !
+/**
  * Imprint
  *
- * @copyright (c) 2012 Robin North - robin(at)robinnorth(dot)co(dot)uk
+ * @copyright (c) 2012 Robin North <robin@robinnorth.co.uk>
  * <http://www.robinnorth.co.uk>
  *
  * Licensed under the GNU GPLv2 (see license.txt)
@@ -13,7 +12,7 @@
  * high-traffic *AMP web applications, based on an idea by Brett at Mr PHP
  * <http://mrphp.com.au/code/image-cache-using-phpthumb-and-modrewrite>
  *
- * @author Robin North
+ * @author Robin North <robin@robinnorth.co.uk>
  * @version 1.0.1
  *
  * @id Imprint flush cache utility

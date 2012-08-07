@@ -2,9 +2,9 @@
 /**
  * Imprint
  *
- * @copyright (c) 2012 Robin North <robin@robinorth.co.uk>
+ * @copyright (c) 2012 Robin North <robin@robinnorth.co.uk>
  * <http://www.robinnorth.co.uk>
- * 
+ *
  *
  * Licensed under the GNU GPLv2 (see license.txt)
  * Date: 24/05/2012
@@ -13,7 +13,7 @@
  * high-traffic *AMP web applications, based on an idea by Brett at Mr PHP
  * <http://mrphp.com.au/code/image-cache-using-phpthumb-and-modrewrite>
  *
- * @author Robin North
+ * @author Robin North <robin@robinnorth.co.uk>
  * @version 1.1.2
  *
  * @id Imprint configuration

@@ -1,8 +1,8 @@
 /* <?php */
-/*!
+/**
  * Imprint
  *
- * @copyright (c) 2012 Robin North - robin(at)robinnorth(dot)co(dot)uk
+ * @copyright (c) 2012 Robin North <robin@robinnorth.co.uk>
  * <http://www.robinnorth.co.uk>
  *
  * Licensed under the GNU GPLv2 (see license.txt)
@@ -12,14 +12,14 @@
  * high-traffic *AMP web applications, based on an idea by Brett at Mr PHP
  * <http://mrphp.com.au/code/image-cache-using-phpthumb-and-modrewrite>
  *
- * @author Robin North
+ * @author Robin North <robin@robinnorth.co.uk>
  * @version 1.0.1
  *
  * @id Imprint MODx Evo Plugin
  *
  * @desc Automatically clears Imprint cache for updated images
  * @param string 	$imprint_path		Path to Imprint application, relative to MODx root
- * 
+ *
  * Default plugin configuration string:
  * &imprint_path=Imprint application path (relative to MODx root);text;imprint/
  *
@@ -32,47 +32,47 @@
  * 18-03-2011	-	1.0.0
  *
  * - Initial release
- * 
+ *
  * 09-05-2011	-	1.0.1
  *
  * - Fix for saving documents with no template variables
  * --------------------------------------------------------------------------
  */
-	
+
 	/* =Plugin configuration
 	------------------------------------------------------------------- */
-	
+
 		// Make MODx object reference
 		global $modx;
-		
+
 		// Imprint path
 		$imprint_path = ( isset( $imprint_path ) ) ? $imprint_path : 'imprint/';
-	
+
 	/* =Required libraries
 	------------------------------------------------------------------- */
 		include( $modx->config['base_path'] . $imprint_path . 'imprint.config.inc.php' );
 		include( $modx->config['base_path'] . $imprint_path . 'lib/debug.inc.php' );
-		
+
 		require( $modx->config['base_path'] . $imprint_path . 'lib/imprint.class.php' );
 
 	/* =Application functionality
 	------------------------------------------------------------------- */
-		
+
 		/**
 		 * Hook into MODx Manager events
 		 * We need to hook 'OnSiteRefresh' and 'OnDocFormSave'
 		 */
-		
+
 		// Make event reference
 		$e = &$modx->Event;
 
 		switch ( $e->name ) {
-			
+
 			case 'OnSiteRefresh':
-			
+
 				// Create new instance of Imprint Class
 				$imprint = new Imprint( $config );
-				
+
 				// Flush the cache
 				if( $imprint->flush_cache() ) {
 					echo '<p><strong>Imprint plugin: </strong> Image cache was flushed succesfully</p>';
@@ -81,15 +81,15 @@
 				}
 
 			break;
-			
+
 			case 'OnDocFormSave':
-				
+
 				// Create new instance of Imprint Class
 				$imprint = new Imprint( $config );
-				
+
 				// Connect to database
 				$modx->db->connect();
-				
+
 				// Get table names
 				$content_table = $modx->getFullTableName( 'site_content' );
 				$tvars_table = $modx->getFullTableName( 'site_tmplvars' );
@@ -97,34 +97,34 @@
 
 				// Find image template variables for site
 				$query = $modx->db->query( 'SELECT id, name, type FROM ' . $tvars_table . ' WHERE type = \'image\'' );
-				
+
 				// Store variable ids
 				$variables = Array();
 				while ( $row = $modx->db->getRow( $query ) ) {
 					$variables[ $row['name'] ] =  $row['id'];
 				}
-				
+
 				// If image variables are found, flush the Imprint cache for them
 				if ( !empty( $variables ) ) {
 
 					// Find image template variables for current document
 					$query = $modx->db->query( 'SELECT value FROM ' . $tvars_content_table . ' WHERE contentid = \''. $id . '\' AND tmplvarid IN (' . implode( ', ', $variables ) . ')' );
-					
+
 					// Clear cache
-					while ( $row = $modx->db->getRow( $query ) ) {	
+					while ( $row = $modx->db->getRow( $query ) ) {
 						// Flush the cache
 						$imprint->flush_cache( $row['value'] );
 					}
-					
+
 				}
-	
+
 			break;
-			
+
 			default:
-			
+
 				// Do nothing
 				return false;
-			
+
 			break;
 
 		}
