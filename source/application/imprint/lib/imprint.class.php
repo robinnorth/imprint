@@ -133,8 +133,6 @@ class Imprint {
 	}
 
 	/**
-	 * create_image
-	 *
 	 * Creates image and caches it
 	 *
 	 * @param string	$image_url	URL of image to create
@@ -158,8 +156,6 @@ class Imprint {
 	}
 
 	/**
-	 * reload_from_cache
-	 *
 	 * Redirects to cached image
 	 *
 	 * @param string	$image_url		Image URL to redirect to
@@ -172,8 +168,6 @@ class Imprint {
 	}
 
 	/**
-	 * flush_cache
-	 *
 	 * Deletes files from image cache
 	 *
 	 * @param string	$source_image_path	Path of source image to remove from cache. If null, ALL source images flushed
@@ -282,8 +276,6 @@ class Imprint {
 	}
 
 	/**
-	 * parse_image_url
-	 *
 	 * Parses provided image url to extract image attributes
 	 *
 	 * @param string	$image_url		URL of image to parse
@@ -344,8 +336,6 @@ class Imprint {
 	}
 
 	/**
-	 * generatate_image
-	 *
 	 * Generates image using phpThumb, based on supplied parameters
 	 *
 	 * @param array		$parameters		Associative array of parameters to give to phpThumb
@@ -410,8 +400,6 @@ class Imprint {
 	}
 
 	/**
-	 * extend_config
-	 *
 	 * Combine user-set config keys with existing config keys and fill in defaults when needed.
 	 *
 	 * The default should be considered to be all of the attributes which are
@@ -447,8 +435,6 @@ class Imprint {
 	}
 
 	/**
-	 * make_cache_directory
-	 *
 	 * Makes and checks cache directory path recursively
 	 *
 	 * @param string	$path			Path to create
@@ -468,8 +454,6 @@ class Imprint {
 	}
 
 	/**
-	 * delete_directory_tree
-	 *
 	 * Recursively deletes a cache directory tree
 	 *
 	 * @param string	$directory_path		Path of directory to delete
@@ -569,8 +553,6 @@ class Imprint {
 	}
 
 	/**
-	 * error
-	 *
 	 * Basic error handling method
 	 *
 	 * @param string	$error			Error message to display
