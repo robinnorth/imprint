@@ -1,24 +1,28 @@
 ###################################################
-# Imprint cache Apache RewriteRules               
+# Imprint cache Apache RewriteRules
 ###################################################
 
 <IfModule mod_rewrite.c>
 
 	RewriteEngine on
 	RewriteBase /imprint/
-	
+
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d
-	
+
 	RewriteRule ^(.*)$ ?image=$1 [QSA,L]
-	
+
 </IfModule>
 
 ###################################################
 # php.ini overrides for phpThumb
 ###################################################
 
-php_value memory_limit "128M"
+<IfModule mod_php.c>
+
+	php_value memory_limit "128M"
+
+</IfModule>
 
 ###################################################
 # Deny cache listing
