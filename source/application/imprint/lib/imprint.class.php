@@ -13,7 +13,7 @@
  * <http://mrphp.com.au/code/image-cache-using-phpthumb-and-modrewrite>
  *
  * @author Robin North <robin@robinnorth.co.uk>
- * @version 1.1.2
+ * @version 1.1.3
  *
  * @id Imprint Class
  *
@@ -47,6 +47,11 @@
  * - Added support for only specifying one key image dimension (the other dimension should be set to '0')
  *   to allow easier creation of proportionately-scaled images
  * - Refactored string cleaning
+ * --------------------------------------------------------------------------
+ *
+ * 04-09-2012	-	1.1.3
+ *
+ * - Prevent zoom crop being set when one image dimension is set to '0'
  * --------------------------------------------------------------------------
  */
 
@@ -184,7 +189,7 @@ class Imprint {
 		$cache_path = $this->_config[ 'imprint' ][ 'site_root_path' ] . $this->_config[ 'imprint' ][ 'imprint_path' ] . 'cache/';
 
 		// Init directories array
-		$size_directories = array();
+		$size_directories = array( );
 
 		// Open cache directory
 		if ( !$handle = opendir( $cache_path ) ) {
@@ -362,16 +367,21 @@ class Imprint {
 		$this->_phpthumb->setSourceFilename( $parameters[ 'source_path' ] );
 
 		// Image dimensions and format
-		if ( $parameters[ 'width' ] !== 0 ) $this->_phpthumb->setParameter( 'w', $parameters[ 'width' ] );
-		if ( $parameters[ 'height' ] !== 0 ) $this->_phpthumb->setParameter( 'h', $parameters[ 'height' ] );
+		if ( $parameters[ 'width' ] !== 0 )
+			$this->_phpthumb->setParameter( 'w', $parameters[ 'width' ] );
+		if ( $parameters[ 'height' ] !== 0 )
+			$this->_phpthumb->setParameter( 'h', $parameters[ 'height' ] );
 		$this->_phpthumb->setParameter( 'f', $parameters[ 'format' ] );
 		$this->_phpthumb->setParameter( 'q', $parameters[ 'quality' ] );
 
 		// Image cropping/resizing parameters
 		// Zoom cropping overrides all other related parameters, so we allow a value of 0 or false to disable it
-		if ( $parameters[ 'zoom_crop' ] != false ) $this->_phpthumb->setParameter( 'zc', $parameters[ 'zoom_crop' ] );
-		if ( $parameters[ 'width' ] !== 0 && $parameters[ 'height' ] != 0 ) $this->_phpthumb->setParameter( 'far', $parameters[ 'force_aspect_ratio' ] );
-		if ( $parameters[ 'width' ] !== 0 && $parameters[ 'height' ] != 0 ) $this->_phpthumb->setParameter( 'iar', $parameters[ 'ignore_aspect_ratio' ] );
+		if ( $parameters[ 'zoom_crop' ] != false && $parameters[ 'width' ] !== 0 && $parameters[ 'height' ] !== 0 )
+			$this->_phpthumb->setParameter( 'zc', $parameters[ 'zoom_crop' ] );
+		if ( $parameters[ 'width' ] !== 0 && $parameters[ 'height' ] !== 0 )
+			$this->_phpthumb->setParameter( 'far', $parameters[ 'force_aspect_ratio' ] );
+		if ( $parameters[ 'width' ] !== 0 && $parameters[ 'height' ] !== 0 )
+			$this->_phpthumb->setParameter( 'iar', $parameters[ 'ignore_aspect_ratio' ] );
 		$this->_phpthumb->setParameter( 'bg', $parameters[ 'background' ] );
 
 		// Generate the image
@@ -416,7 +426,7 @@ class Imprint {
 	 */
 	private function _extend_config( $defaults, $user ) {
 		$user = (array) $user;
-		$config = array();
+		$config = array( );
 
 		// Extend default configuration array recursively
 		foreach ( $defaults as $name => $default ) {
@@ -582,7 +592,6 @@ class Imprint {
 	private function _clean( $input ) {
 		// Return cleaned input
 		return strip_tags( htmlspecialchars( $input ) );
-
 	}
 
 }
