@@ -3,7 +3,7 @@
  * Imprint
  *
  * @copyright (c) 2012 Robin North <robin@robinnorth.co.uk>
- * <http://www.robinnorth.co.uk>
+ * <robinnorth.co.uk>
  *
  *
  * Licensed under the GNU GPLv2 (see license.txt)
