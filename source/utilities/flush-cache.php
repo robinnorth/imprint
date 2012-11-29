@@ -6,7 +6,7 @@
  * <http://www.robinnorth.co.uk>
  *
  * Licensed under the GNU GPLv2 (see license.txt)
- * Date: 24/05/2012
+ * Date: 29/11/2012
  *
  * @projectDescription A complete image cropping, resizing and caching implementation for
  * high-traffic *AMP web applications, based on an idea by Brett at Mr PHP
@@ -23,29 +23,35 @@
  *
  * (dd-mm-yyyy)
  *
- * --------------------------------------------------------------------------
+ *--------------------------------------------------------------------
  *
  * 18-03-2011	-	1.0.0
  *
  * - Initial release
- * --------------------------------------------------------------------------
+ *--------------------------------------------------------------------
  *
  * 18-05-2011	-	1.0.1
  *
  * - Updated demo to utilise new support for deleting specific image sizes
- * --------------------------------------------------------------------------
+ *--------------------------------------------------------------------
  */
 
-/* =Required libraries
-  ------------------------------------------------------------------- */
+
+/**
+ * Required libraries
+ *--------------------------------------------------------------------
+ */
 
 include( '../application/imprint/imprint.config.inc.php' );
 include( '../application/imprint/lib/debug.inc.php' );
 
 require( '../application/imprint/lib/imprint.class.php' );
 
-/* =Application functionality
-  ------------------------------------------------------------------- */
+
+/**
+ * Application functionality
+ *--------------------------------------------------------------------
+ */
 
 // Check for a specific source image to flush
 $image_url = ( isset( $_GET[ 'image' ] ) ) ? $_GET[ 'image' ] : null;
@@ -57,10 +63,9 @@ $image_size = ( isset( $_GET[ 'size' ] ) ) ? array( $_GET[ 'size' ] ) : null;
 $imprint = new Imprint( $config );
 
 // Test flushing the cache
-if ( $imprint->flush_cache( $image_url, $image_size ) ) {
+if ( $imprint->flush_cache( $image_url, $image_size ) )
 	echo 'Cache flushed!';
-} else {
+else
 	echo 'Cache not flushed!';
-}
 
 ?>

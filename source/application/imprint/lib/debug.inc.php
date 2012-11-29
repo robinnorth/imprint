@@ -20,9 +20,10 @@
  * @desc The Imprint web application debug configuration file
  */
 
+
 /**
  * Debug configuration
- * --------------------------------------------------------------------
+ *--------------------------------------------------------------------
  */
 
 if ( $debug ) {
