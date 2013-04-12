@@ -1,7 +1,7 @@
 
 # Imprint
 
-A complete image cropping, resizing and caching implementation for high-trafficAMP web applications, based on an idea by Brett at Mr PHP ([http://mrphp.com.au/code/image-cache-using-phpthumb-and-modrewrite](http://mrphp.com.au/code/image-cache-using-phpthumb-and-modrewrite))
+A complete image cropping, resizing and caching implementation for high-traffic LAMP web applications, based on an idea by Brett at Mr PHP ([http://mrphp.com.au/code/image-cache-using-phpthumb-and-modrewrite](http://mrphp.com.au/code/image-cache-using-phpthumb-and-modrewrite))
 
 Licensed under the GNU GPLv2 (see license.txt)
 
@@ -129,12 +129,12 @@ Instead, you should use the code contained within it to build your own cache-flu
 
 Also included with the Imprint distribution at 'source/utilities/imprint.modx-evo-plugin.php' is a plugin for the MODX Evo CMS, which you can use on your production MODX Evo sites, or as a further example of how to build a cache-flushing plugin for another CMS. This is described in the next section of this readme.
 
-## MODx Evo plugin
+## MODX Evo plugin
 
-The Imprint MODx Evo plugin allows you to integrated Imprint seamlessly with the MODx Evo CMS. It will clear the Imprint cache for any images associated with a document via Template Variables when you save a document in the Manager, and will clear the entire Imprint cache when the Site -> Clear Cache function is called.
+The Imprint MODX Evo plugin allows you to integrated Imprint seamlessly with the MODX Evo CMS. It will clear the Imprint cache for any images associated with a document via Template Variables when you save a document in the Manager, and will clear the entire Imprint cache when the Site -> Clear Cache function is called.
 
 To install it, create a new plugin at Elements -> Manage Elements -> Plugins -> New Plugin and paste the code from `source/utilities/imprint.modx-evo-plugin.php` into the 'Plugin code' field. Name the plugin 'Imprint'.
 
-On the 'Configuration' tab, paste `&imprint_path=Imprint application path (relative to MODx root);text;imprint/` into the 'Plugin configuration' field and click the 'Update parameter display' button. If you have installed Imprint at a different location to the default, you will need to specify the new path to the application in the text field that appears.
+On the 'Configuration' tab, paste `&imprint_path=Imprint application path (relative to MODX root);text;imprint/` into the 'Plugin configuration' field and click the 'Update parameter display' button. If you have installed Imprint at a different location to the default, you will need to specify the new path to the application in the text field that appears.
 
 On the 'System Events' tab, make sure that the event 'OnSiteRefresh (in the 'Parser Service Events' section) and 'OnDocFormSave' (in the 'Documents' section) are checked and then click the 'Save' button.
